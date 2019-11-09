@@ -7,6 +7,17 @@ migration()
   if [ -f $1 ]    # Le paramètre donné est un fichier
   	then
     local FILE=$1
+    local newNameBlacks=""
+    cat $FILE | while  read ligne ; do
+      if [[ $ligne =~ Black ]]
+      then
+          queryValue $ligne
+          echo $ligne
+          #mv $newNameBlacks $newNameBlacks $name
+
+      fi
+
+    done
 
   else
     ALLREP=$(ls $1)
@@ -20,6 +31,14 @@ migration()
 
 }
 
+queryValue()
+{
+  #echo $1 | cut -d'"' -f1
+  local name=$1
+  name=${name:6}
+  #$name=${$1%'"'*}
+  echo $name
+}
 
 SourceRep=$1 # chemin vers le répertoire source des fichiers PGN
 CibleRep=$2 # chemin vers le répertoire cible qui contiendra la nouvelle arborescence
